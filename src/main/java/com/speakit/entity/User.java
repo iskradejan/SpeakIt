@@ -31,9 +31,6 @@ public class User {
 	@JsonIgnore
 	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
 	private Session session;
-	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name = "fkUserId")
-	private List<Post> posts;
 	@CreationTimestamp
 	@Column(nullable = false)
 	private LocalDateTime createDate;
@@ -113,20 +110,12 @@ public class User {
 		return this;
 	}
 
-	public List<Post> getPosts() {
-		return posts;
+	public Session getSession() {
+		return session;
 	}
 
-	public User setPosts(List<Post> posts) {
-		this.posts = posts;
-		return this;
-	}
-
-	public User addPost(Post post) {
-		if(this.posts == null) {
-			this.posts = new ArrayList<>();
-		}
-		this.posts.add(post);
+	public User setSession(Session session) {
+		this.session = session;
 		return this;
 	}
 

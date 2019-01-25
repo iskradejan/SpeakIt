@@ -14,6 +14,9 @@ public class Comment {
 	@ManyToOne
 	@JoinColumn(name = "fkUserId")
 	private User user;
+	@ManyToOne
+	@JoinColumn
+	private Comment comment;
 	private String body;
 	@CreationTimestamp
 	@Column(nullable = false)
@@ -37,6 +40,15 @@ public class Comment {
 
 	public Comment setUser(User user) {
 		this.user = user;
+		return this;
+	}
+
+	public Comment getComment() {
+		return comment;
+	}
+
+	public Comment setComment(Comment comment) {
+		this.comment = comment;
 		return this;
 	}
 

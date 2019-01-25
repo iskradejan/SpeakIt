@@ -15,6 +15,9 @@ public class Post {
 	private Long id;
 	private String title;
 	private String body;
+	@ManyToOne
+	@JoinColumn(name = "fkUserId")
+	private User user;
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "fkPostId")
 	private List<Comment> comments;
@@ -52,6 +55,15 @@ public class Post {
 		return this;
 	}
 
+	public User getUser() {
+		return user;
+	}
+
+	public Post setUser(User user) {
+		this.user = user;
+		return this;
+	}
+
 	public List<Comment> getComments() {
 		return comments;
 	}
@@ -62,7 +74,7 @@ public class Post {
 	}
 
 	public Post addComment(Comment comment) {
-		if(comments == null) {
+		if (comments == null) {
 			this.comments = new ArrayList<>();
 		}
 		comments.add(comment);
