@@ -10,11 +10,16 @@ public class ApiException extends RuntimeException {
 	private HttpStatus httpStatus;
 	private int errorCode;
 
-	public ApiException(Throwable cause, HttpStatus httpStatus, int errorCode) {
-		super(cause);
+	public ApiException(HttpStatus httpStatus, int errorCode) {
 		this.httpStatus = httpStatus;
 		this.errorCode = errorCode;
 	}
+
+//	public ApiException(Throwable cause, HttpStatus httpStatus, int errorCode) {
+//		super(cause);
+//		this.httpStatus = httpStatus;
+//		this.errorCode = errorCode;
+//	}
 
 	public List<ApiError> getErrors() {
 		return errors;

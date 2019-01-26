@@ -1,9 +1,11 @@
 package com.speakit.entity;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,10 +15,14 @@ public class Post {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	@NotBlank
+	@Column(nullable = false)
 	private String title;
+	@NotBlank
+	@Column(nullable = false)
 	private String body;
 	@ManyToOne
-	@JoinColumn(name = "fkUserId")
+	@JoinColumn(name = "fkUserId", nullable = false)
 	private User user;
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "fkPostId")

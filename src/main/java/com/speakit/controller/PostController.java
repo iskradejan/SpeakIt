@@ -2,14 +2,19 @@ package com.speakit.controller;
 
 import com.speakit.entity.Post;
 import com.speakit.entity.User;
+import com.speakit.exception.InvalidRequestException;
+import com.speakit.exception.ResourceAlreadyExistsException;
 import com.speakit.exception.ResourceMissingException;
 import com.speakit.repository.PostRepository;
 import com.speakit.repository.UserRepository;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.transaction.Transactional;
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -21,12 +26,16 @@ public class PostController {
 	@Resource
 	private UserRepository userRepository;
 
-	@PostMapping
-	public ResponseEntity<?> create(@RequestBody Post post) {
-		User user = new User();
-		post.setUser(user);
+	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> create(@RequestBody @Valid Post post, User user) {
 
-		postRepository.save(post);
+		if(postRepository.findOneByTitle(post.getTitle()) == null) {
+			post.setUser(user);
+
+			postRepository.save(post);
+		} else {
+			throw new ResourceAlreadyExistsException();
+		}
 
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
@@ -46,25 +55,29 @@ public class PostController {
 	}
 
 	@PatchMapping(path = "{id}")
-	public ResponseEntity<?> update(@PathVariable Long id, @RequestBody Post updatePost) {
+	public ResponseEntity<?> update(@PathVariable Long id, @RequestBody Post updatePost, User user) {
 		Post post = postRepository.findById(id).orElseThrow(ResourceMissingException::new);
+
+		if(post.getUser() != user){
+			throw new InvalidRequestException();
+		}
 
 		if(updatePost.getBody() != null && !updatePost.getBody().isBlank()) {
 			post.setBody(updatePost.getBody());
+
+			postRepository.save(post);
 		}
 
-		if(updatePost.getTitle() != null && !updatePost.getTitle().isBlank()) {
-			post.setTitle(updatePost.getTitle());
-		}
-
-		postRepository.save(post);
-
-		return new ResponseEntity<>(post, HttpStatus.ACCEPTED);
+		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 
 	@DeleteMapping(path = "{id}")
-	public ResponseEntity<?> delete(@PathVariable Long id) {
+	public ResponseEntity<?> delete(@PathVariable Long id, User user) {
 		Post post = postRepository.findById(id).orElseThrow(ResourceMissingException::new);
+
+		if(post.getUser() != user){
+			throw new InvalidRequestException();
+		}
 
 		postRepository.delete(post);
 

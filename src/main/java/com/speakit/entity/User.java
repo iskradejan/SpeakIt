@@ -1,36 +1,43 @@
 package com.speakit.entity;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@Column(nullable = false)
+	@NotBlank
+	@Pattern(regexp = "\\A[A-Z0-9$\\-_.+!*'()]+@[A-Z0-9-]+(\\.[A-Z0-9-]+)+\\z", flags = Pattern.Flag.CASE_INSENSITIVE)
+	@Length(min = 5, max = 128)
+	@Column(unique = true, nullable = false)
 	private String username;
+	@NotBlank
 	@Column(nullable = false)
 	private String displayName;
+	@NotBlank
+	@Pattern(regexp = "(?=.*[A-Z]+)(?=.*[a-z]+)(?=.*[0-9]+)[\\x20-\\x7e]*")
+	@Length(min = 8, max = 256)
 	@Column(nullable = false)
 	private String password;
+	@NotBlank
 	@Column(nullable = false)
 	private String firstName;
+	@NotBlank
 	@Column(nullable = false)
 	private String lastName;
 	@Column(nullable = false)
-	private String gender;
-	@Column(nullable = false)
 	private boolean enabled = true;
-	@JsonIgnore
-	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-	private Session session;
 	@CreationTimestamp
 	@Column(nullable = false)
 	private LocalDateTime createDate;
@@ -92,30 +99,12 @@ public class User {
 		return this;
 	}
 
-	public String getGender() {
-		return gender;
-	}
-
-	public User setGender(String gender) {
-		this.gender = gender;
-		return this;
-	}
-
 	public boolean isEnabled() {
 		return enabled;
 	}
 
 	public User setEnabled(boolean enabled) {
 		this.enabled = enabled;
-		return this;
-	}
-
-	public Session getSession() {
-		return session;
-	}
-
-	public User setSession(Session session) {
-		this.session = session;
 		return this;
 	}
 

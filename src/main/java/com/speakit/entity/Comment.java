@@ -2,8 +2,10 @@ package com.speakit.entity;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 
 @Entity
@@ -12,11 +14,14 @@ public class Comment {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@ManyToOne
-	@JoinColumn(name = "fkUserId")
+	@JoinColumn(name = "fkUserId", nullable = false)
 	private User user;
 	@ManyToOne
 	@JoinColumn
 	private Comment comment;
+	@NotBlank
+	@Length(min = 5, max = 2000)
+	@Column(nullable = false)
 	private String body;
 	@CreationTimestamp
 	@Column(nullable = false)

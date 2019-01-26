@@ -11,8 +11,10 @@ public class Session {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	@Column(nullable = false)
+	private String token;
 	@OneToOne
-	@JoinColumn(nullable = false)
+	@JoinColumn(name = "fkUserId", nullable = false)
 	private User user;
 	@CreationTimestamp
 	@Column(nullable = false)
@@ -27,6 +29,15 @@ public class Session {
 
 	public Session setId(Long id) {
 		this.id = id;
+		return this;
+	}
+
+	public String getToken() {
+		return token;
+	}
+
+	public Session setToken(String token) {
+		this.token = token;
 		return this;
 	}
 
