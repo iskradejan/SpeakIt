@@ -1,6 +1,6 @@
 package com.speakit.entity;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
+import com.speakit.utility.Constant;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -18,7 +18,7 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@NotBlank
-	@Pattern(regexp = "\\A[A-Z0-9$\\-_.+!*'()]+@[A-Z0-9-]+(\\.[A-Z0-9-]+)+\\z", flags = Pattern.Flag.CASE_INSENSITIVE)
+	@Pattern(regexp = Constant.REGEX_USERNAME, flags = Pattern.Flag.CASE_INSENSITIVE)
 	@Length(min = 5, max = 128)
 	@Column(unique = true, nullable = false)
 	private String username;
@@ -26,7 +26,7 @@ public class User {
 	@Column(nullable = false)
 	private String displayName;
 	@NotBlank
-	@Pattern(regexp = "(?=.*[A-Z]+)(?=.*[a-z]+)(?=.*[0-9]+)[\\x20-\\x7e]*")
+	@Pattern(regexp = Constant.REGEX_PASSWORD)
 	@Length(min = 8, max = 256)
 	@Column(nullable = false)
 	private String password;

@@ -1,5 +1,6 @@
 package com.speakit.entity;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -7,6 +8,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Session {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

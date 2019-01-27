@@ -4,7 +4,6 @@ import com.speakit.entity.Session;
 import com.speakit.entity.User;
 import com.speakit.exception.NotAuthenticatedException;
 import com.speakit.repository.SessionRepository;
-import com.speakit.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.MethodParameter;
@@ -13,9 +12,6 @@ import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 
@@ -66,6 +62,6 @@ public class UserMethodArgumentResolver implements HandlerMethodArgumentResolver
 	}
 
 	private boolean validateSession(Session session) {
-		return session.getCreateDate().plusMinutes(60).isAfter(LocalDateTime.now());
+		return session.getUpdateDate().plusMinutes(60).isAfter(LocalDateTime.now());
 	}
 }
