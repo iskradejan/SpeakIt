@@ -7,6 +7,10 @@ import com.speakit.exception.ResourceAlreadyExistsException;
 import com.speakit.exception.ResourceMissingException;
 import com.speakit.repository.PostRepository;
 import com.speakit.repository.UserRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -42,9 +46,17 @@ public class PostController {
 
 	@GetMapping
 	public ResponseEntity<?> readAll() {
-		List<Post> posts = postRepository.findAllByOrderByCreateDateDesc();
+		List<Post> posts = postRepository.findAllByOrderByIdDesc();
 
 		return new ResponseEntity<>(posts, HttpStatus.OK);
+	}
+
+	@GetMapping(path = "page/{pageNumber}")
+	public ResponseEntity<?> readByPage(@PathVariable Integer pageNumber) {
+		Pageable pageable = PageRequest.of(pageNumber, 20, Sort.by("id").descending());
+		Page<Post> posts = postRepository.findAll(pageable);
+
+		return new ResponseEntity<>(posts.getContent(), HttpStatus.OK);
 	}
 
 	@GetMapping(path = "{id}")
