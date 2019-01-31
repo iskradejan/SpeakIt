@@ -23,6 +23,8 @@ public class User {
 	@Column(unique = true, nullable = false)
 	private String username;
 	@NotBlank
+	@Pattern(regexp = Constant.REGEX_DISPLAYNAME)
+	@Length(min = 3, max = 30)
 	@Column(nullable = false)
 	private String displayName;
 	@NotBlank
@@ -30,12 +32,6 @@ public class User {
 	@Length(min = 8, max = 256)
 	@Column(nullable = false)
 	private String password;
-	@NotBlank
-	@Column(nullable = false)
-	private String firstName;
-	@NotBlank
-	@Column(nullable = false)
-	private String lastName;
 	@Column(nullable = false)
 	private boolean enabled = true;
 	@CreationTimestamp
@@ -78,24 +74,6 @@ public class User {
 
 	public User setPassword(String password) {
 		this.password = password;
-		return this;
-	}
-
-	public String getFirstName() {
-		return firstName;
-	}
-
-	public User setFirstName(String firstName) {
-		this.firstName = firstName;
-		return this;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public User setLastName(String lastName) {
-		this.lastName = lastName;
 		return this;
 	}
 
