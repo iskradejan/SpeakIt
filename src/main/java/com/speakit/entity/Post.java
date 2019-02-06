@@ -1,5 +1,6 @@
 package com.speakit.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -29,6 +30,7 @@ public class Post {
 	@CreationTimestamp
 	@Column(nullable = false)
 	private LocalDateTime createDate;
+	@JsonIgnore
 	@UpdateTimestamp
 	@Column(nullable = false)
 	private LocalDateTime updateDate;
@@ -84,5 +86,13 @@ public class Post {
 		}
 		comments.add(comment);
 		return this;
+	}
+
+	public LocalDateTime getCreateDate() {
+		return createDate;
+	}
+
+	public LocalDateTime getUpdateDate() {
+		return updateDate;
 	}
 }

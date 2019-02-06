@@ -1,7 +1,8 @@
 package com.speakit.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.speakit.utility.Constant;
-import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.validator.constraints.Length;
@@ -27,16 +28,20 @@ public class User {
 	@Length(min = 3, max = 30)
 	@Column(nullable = false)
 	private String displayName;
+	@JsonIgnore
 	@NotBlank
 	@Pattern(regexp = Constant.REGEX_PASSWORD)
 	@Length(min = 8, max = 256)
 	@Column(nullable = false)
 	private String password;
+	@JsonIgnore
 	@Column(nullable = false)
 	private boolean enabled = true;
+	@JsonIgnore
 	@CreationTimestamp
 	@Column(nullable = false)
 	private LocalDateTime createDate;
+	@JsonIgnore
 	@UpdateTimestamp
 	@Column(nullable = false)
 	private LocalDateTime updateDate;

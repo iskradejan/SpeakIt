@@ -43,3 +43,8 @@ logging:
     org.springframework.ws.server.MessageTracing.sent: DEBUG
     org.springframework.ws.client.MessageTracing.received: TRACE
     org.springframework.ws.server.MessageTracing.received: TRACE
+
+email:
+  username: speakit.help@gmail.com
+  password: adab37fba@ad
+  from: speakit.help@gmail.com

@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
@@ -26,6 +27,7 @@ public class AuthenticationController {
 	@Resource
 	private PasswordEncoder passwordEncoder;
 
+	@CrossOrigin(origins = "http://localhost:4200")
 	@PostMapping(path = "login")
 	public ResponseEntity<?> login(@RequestBody @Valid Login login) {
 		User user = userRepository.findByUsername(login.getUsername());

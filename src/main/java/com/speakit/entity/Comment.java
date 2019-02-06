@@ -1,5 +1,6 @@
 package com.speakit.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.validator.constraints.Length;
@@ -16,9 +17,6 @@ public class Comment {
 	@ManyToOne
 	@JoinColumn(name = "fkUserId", nullable = false)
 	private User user;
-	@ManyToOne
-	@JoinColumn
-	private Comment comment;
 	@NotBlank
 	@Length(min = 5, max = 2000)
 	@Column(nullable = false)
@@ -26,6 +24,7 @@ public class Comment {
 	@CreationTimestamp
 	@Column(nullable = false)
 	private LocalDateTime createDate;
+	@JsonIgnore
 	@UpdateTimestamp
 	@Column(nullable = false)
 	private LocalDateTime updateDate;
@@ -45,15 +44,6 @@ public class Comment {
 
 	public Comment setUser(User user) {
 		this.user = user;
-		return this;
-	}
-
-	public Comment getComment() {
-		return comment;
-	}
-
-	public Comment setComment(Comment comment) {
-		this.comment = comment;
 		return this;
 	}
 
