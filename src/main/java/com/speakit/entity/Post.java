@@ -6,6 +6,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +20,7 @@ public class Post {
 	@Column(nullable = false)
 	private String title;
 	@NotBlank
-	@Column(nullable = false)
+	@Column(nullable = false, length = 2000)
 	private String body;
 	@ManyToOne
 	@JoinColumn(name = "fkUserId", nullable = false)

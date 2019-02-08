@@ -4,9 +4,9 @@ server:
 spring:
   datasource:
     url: jdbc:mysql://localhost:3306/speakit?allowPublicKeyRetrieval=true&useSSL=false
-    driver-class-name: com.mysql.jdbc.Driver
-    username: speakit_app
-    password: speakit1234!
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: Qup1234!
     hikari:
       connection-test-query: SELECT 1
       auto-commit: false
