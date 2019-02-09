@@ -34,9 +34,8 @@ public class User {
 	@Length(min = 8, max = 256)
 	@Column(nullable = false)
 	private String password;
-	@JsonIgnore
 	@Column(nullable = false)
-	private boolean enabled = true;
+	private boolean verified = false;
 	@JsonIgnore
 	@CreationTimestamp
 	@Column(nullable = false)
@@ -82,12 +81,12 @@ public class User {
 		return this;
 	}
 
-	public boolean isEnabled() {
-		return enabled;
+	public boolean isVerified() {
+		return verified;
 	}
 
-	public User setEnabled(boolean enabled) {
-		this.enabled = enabled;
+	public User setVerified(boolean verified) {
+		this.verified = verified;
 		return this;
 	}
 
